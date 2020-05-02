@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Activities;
 using Domain;
@@ -21,15 +22,21 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> List()
+        public async Task<ActionResult<List<Activity>>> List(CancellationToken ct)
         {
-            return await _mediator.Send(new ActivitiesList.Query());
+            return await _mediator.Send(new ActivitiesList.Query(),ct);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> Details(Guid id)
         {
             return await _mediator.Send(new ActivityDetails.Query{Id = id});
+        }
+        //Taking data from body [ApiController] recognise it
+        [HttpPost]
+        public async Task<ActionResult<Unit>> Create(CrateActivity.Command command)
+        {
+            return await _mediator.Send(command);
         }
 
     }
