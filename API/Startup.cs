@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using MediatR;
 using Persistance;
 using Application.Activities;
+using FluentValidation.AspNetCore;
 
 namespace API
 {
@@ -39,7 +40,9 @@ namespace API
                 });
             });
             services.AddMediatR(typeof(ActivitiesList.Handler).Assembly);
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(
+                config => {config.RegisterValidatorsFromAssemblyContaining<CreateActivity>();}
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,12 +2,13 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Persistance;
 
 namespace Application.Activities
 {
-    public class CrateActivity
+    public class CreateActivity
     {
         public class Command : IRequest
         {
@@ -18,6 +19,19 @@ namespace Application.Activities
             public DateTime Date {get; set;}
             public string City {get; set;}
             public string PlaceOfEvent {get; set;}
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x=> x.Title).NotEmpty();
+                RuleFor(x=> x.Category).NotEmpty();
+                RuleFor(x=> x.City).NotEmpty();
+                RuleFor(x=> x.Description).NotEmpty();
+                RuleFor(x=> x.Date).NotEmpty();
+
+            }
         }
 
         public class Handler : IRequestHandler<Command>

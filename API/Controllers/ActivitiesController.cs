@@ -33,7 +33,7 @@ namespace API.Controllers
         }
         //Taking data from body [ApiController] recognise it
         [HttpPost]
-        public async Task<ActionResult<Unit>> Create(CrateActivity.Command command)
+        public async Task<ActionResult<Unit>> Create(CreateActivity.Command command)
         {
             return await _mediator.Send(command);
         }
