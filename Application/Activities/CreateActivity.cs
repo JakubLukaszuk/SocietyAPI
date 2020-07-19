@@ -30,7 +30,7 @@ namespace Application.Activities
                 RuleFor(x=> x.City).NotEmpty();
                 RuleFor(x=> x.Description).NotEmpty();
                 RuleFor(x=> x.Date).NotEmpty();
-
+                RuleFor(x=>x.PlaceOfEvent).NotEmpty();
             }
         }
 

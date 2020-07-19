@@ -33,6 +33,10 @@ namespace API.Controllers
         public async Task<ActionResult<string>> Get(int id)
         {
             Value value = await _context.Values.FindAsync(id);
+
+            if(value == null){
+                return NotFound();
+            }
             return Ok(value);
         }
 
