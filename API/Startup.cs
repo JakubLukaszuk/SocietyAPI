@@ -16,6 +16,8 @@ using Persistance;
 using Application.Activities;
 using FluentValidation.AspNetCore;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
+using Domain;
 
 namespace API
 {
@@ -44,7 +46,15 @@ namespace API
             services.AddControllers().AddFluentValidation(
                 config => {config.RegisterValidatorsFromAssemblyContaining<CreateActivity>();}
                 );
+
+            var builder = services.AddIdentityCore<AppUser>();
+            var identitiBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identitiBuilder.AddEntityFrameworkStores<DataContext>();
+            identitiBuilder.AddSignInManager<SignInManager<AppUser>>();
+
+            services.AddAuthentication();
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

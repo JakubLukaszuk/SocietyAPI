@@ -23,7 +23,7 @@ namespace API.Middleware
         {
             try
             {
-                await _next(context)
+                await _next(context);
             }
             catch(Exception exception)
             {
@@ -36,10 +36,10 @@ namespace API.Middleware
             object errors = null;
             switch(exception)
             {
-                case RestException re:
+                case RestException e:
                     logger.LogError(e, "REST ERROR");
-                    errors = re.Errors;
-                    context.Response.StatusCode = (int) re.Code;
+                    errors = e.Errors;
+                    context.Response.StatusCode = (int) e.Code;
                     break;
                 case Exception e:
                     logger.LogError(e, "SERVER ERROR");
